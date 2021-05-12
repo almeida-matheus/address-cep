@@ -13,6 +13,7 @@ body {
     background: #f0f2f5;
     font-family:'Poppins', sans-serif
 }
+
 a {
     text-decoration: none;
 }
@@ -20,11 +21,7 @@ a {
 .all-navbar {
     margin: 0 auto;
     background-color: #e3f4fe;
-    /*for scroll*/
-    z-index: 999;
-    /* position: fixed; */
     width: 100%;
-    transition: all .5s ease;
 }
 .navbar {
     display: flex;
@@ -151,6 +148,8 @@ table a {
     align-items: center;
     justify-content: center;
 
+    z-index: 99;
+
     opacity: 0;
     visibility: hidden;
     transition: all 1s ease;
@@ -168,7 +167,7 @@ table a {
     padding: 2.6rem;
 
     position: relative;
-    /* z-index: 1; */
+    z-index: 1;
 
     z-index: 9999;
 }
@@ -217,6 +216,8 @@ input {
     border: none;
     border-radius: 0.2rem;
 
+    /* font-weight: 600 !important; */
+
     padding: 0.8rem;
 
     width: 100%;
@@ -232,7 +233,6 @@ input:focus, textarea:focus {
     box-shadow: none !important;
     /* border: 0.5px solid blue !important; */
     outline-width: 0;
-    font-weight: 400
 }
 
 button:focus {
@@ -252,16 +252,12 @@ button:focus {
     margin-top: 10px;
     padding: 10px;
 }
-/* .action a {
-    text-decoration: none !important;
-    width: 100%;
-    color: white;
-}
-.action a:hover {
-    text-decoration: none !important;
-} */
+/*// FORM */
 
+/*! ALERT */
 .alert {
+    z-index: 999;
+
     display: none;
     position: absolute;
     top: 0;
@@ -273,3 +269,4 @@ button:focus {
 .alert.active {
     display: block;
 }
+/*// ALERT */

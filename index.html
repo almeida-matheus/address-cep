@@ -33,14 +33,13 @@
 
         <a href="#" onclick="Modal.open()" class="button new add__btn">
             <i class="far fa-address-card"></i>&nbsp;
-            Novo endereço
+            NOVO ENDEREÇO
         </a>
 
         <form method="get" action="{% url 'busca' %}">
             <div class="input-group my-5">
-                <input type="search" class="form-control bg-light"
-                    placeholder="Pesquise pelo nome" aria-label="pesquisar contato"
-                    aria-describedby="button-addon" value="" name="termo">
+                <input type="search" class="form-control bg-light" placeholder="Pesquise pelo nome"
+                    aria-label="pesquisar contato" aria-describedby="button-addon" value="" name="termo">
                 <div class="input-group-append">
                     <button class="btn search__btn" type="submit" id="button-addon">
                         <i class="fas fa-search"></i>
@@ -51,7 +50,7 @@
 
         <!--! TABLE -->
         <section id="table-overflow">
-            <table class="content-table">
+            <table id="tbl" class="content-table">
                 <thead>
                     <tr>
                         <!-- <th>ID</th> -->
@@ -59,14 +58,15 @@
                         <th>CEP</th>
                         <th>Estado</th>
                         <th>Cidade</th>
-                        <th>Bairro</th>
                         <th>Rua</th>
+                        <th>Número</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <!-- <td>{{ contato.id }}</td> -->
-                        <td>{{ nome }}</td>
+                        <!-- <td>{{ nome }}</td>
                         <td>
                             <a href="{% url 'ver_contato' contato.id %}">{{ CEP }}</a>
                         </td>
@@ -74,6 +74,7 @@
                         <td>{{ localidade }}</td>
                         <td>{{ bairro }}</td>
                         <td>{{ logradouro }}</td>
+                        <td><button type="button" onclick='removeLinha(this)' class="btn btn-danger">Remover</button></td> -->
                     </tr>
                 </tbody>
             </table>
@@ -85,32 +86,28 @@
             <div id="form">
                 <h3>Nova Endereço</h3>
                 <!-- <form action="" onsubmit="Form.submit(event)"> -->
-                <form class="form-card" onsubmit="return validate(0)">
+                <!-- <form class="form-card" onsubmit="return validate(0)"> -->
+                <!-- onsubmit="createLine(nome.value, cep.value, rua.value, numero.value, cidade.value, estado.value)" -->
+                <div class="form-card" onsubmit="return validate(0)">
                     <div class="row justify-content-between text-left mt-5">
 
-                        <div class="form-group col-sm-6 flex-column d-flex">
-                            <label class="form-control-label mb-0 px-1">Nome<span class="text-danger"> *</span>
+                        <div class="form-group col-sm-12 flex-column d-flex">
+                            <label for="nome" class="form-control-label mb-0 px-1">Nome<span class="text-danger"> *</span>
                             </label>
-                            <input id="nome" type="text" name="nome" placeholder="Nome Sobrenome" maxlength="100" onblur="validate(1)"
-                                required>
+                            <input id="nome" type="text" name="nome" placeholder="..." maxlength="100"
+                                 required> 
                         </div>
-
-                        <div class="form-group col-sm-6 flex-column d-flex">
-                            <label class="form-control-label mb-0 px-1">E-mail<span class="text-danger"> *</span>
-                            </label>
-                            <input id="email" type="email" name="email" placeholder="email@provedor.com" maxlength="100"
-                                onblur="validate(2)" required>
-                        </div>
-
+                        <!-- onblur="validate(1)"  -->
                     </div>
 
                     <div class="row justify-content-start text-left">
                         <div class="form-group col-sm-6 flex-column d-flex">
-                            <label class="form-control-label mb-0 px-1">CEP<span class="text-danger"> *</span>
+                            <label for="cep" class="form-control-label mb-0 px-1">CEP<span class="text-danger"> *</span>
                             </label>
                             <div class="input-group">
-                                <input id="cep" type="text" name="cep" class="form-control" maxlength="8" pattern="\d*" title="Somente números são permitidos"  placeholder="00000000"
-                                    aria-label="CEP" aria-describedby="button-addon2" onblur="validate(3)" required>
+                                <input id="cep" type="text" name="cep" class="form-control" maxlength="8" pattern="\d*"
+                                    title="Somente números são permitidos" placeholder="..." aria-label="CEP"
+                                    aria-describedby="button-addon2" required>
                                 <div class="input-group-append">
                                     <button class="cep__btn btn btn-primary text-white" type="button"
                                         id="button-addon2">
@@ -124,58 +121,61 @@
                     <div class="row justify-content-between text-left">
 
                         <div class="form-group col-sm-10 flex-column d-flex">
-                            <label class="form-control-label mb-0 px-1">Rua<span class="text-danger"> *</span>
+                            <label for="rua" class="form-control-label mb-0 px-1">Rua<span class="text-danger"> *</span>
                             </label>
-                            <input id="rua" type="text" name="rua" placeholder="Nome da rua" onblur="validate(4)"
+                            <input id="rua" type="text" name="rua" placeholder="..."
                                 required>
                         </div>
 
                         <div class="form-group col-sm-2 flex-column d-flex">
-                            <label class="form-control-label mb-0 px-1">N°<span class="text-danger"> *</span>
+                            <label for="numero" class="form-control-label mb-0 px-1">N°<span class="text-danger"> *</span>
                             </label>
-                            <input id="numero" name="numero" pattern="\d*" title="Somente números são permitidos" placeholder="123" maxlength="6"
-                                onblur="validate(5)" required>
+                            <input id="numero" name="numero" pattern="\d*" title="Somente números são permitidos"
+                                placeholder="..." maxlength="6" required>
                         </div>
 
                     </div>
 
                     <div class="row justify-content-between text-left">
                         <div class="form-group col-sm-10 flex-column d-flex">
-                            <label class="form-control-label mb-0 px-1">Cidade<span class="text-danger"> *</span>
+                            <label for="cidade" class="form-control-label mb-0 px-1">Cidade<span class="text-danger"> *</span>
                             </label>
-                            <input id="cidade" type="text" name="cidade" placeholder="Nome da cidade" maxlength="100"
-                                onblur="validate(6)" required>
+                            <input id="cidade" type="text" name="cidade" placeholder="..." maxlength="100"
+                                required>
                         </div>
                         <div class="form-group col-sm-2 flex-column d-flex">
-                            <label class="form-control-label mb-0 px-1">UF<span class="text-danger"> *</span>
+                            <label for="estado" class="form-control-label mb-0 px-1">UF<span class="text-danger"> *</span>
                             </label>
-                            <input id="estado" type="text" name="estado" placeholder="MG" maxlength="2" onblur="validate(7)" required>
+                            <input id="estado" type="text" name="estado" placeholder="..." maxlength="2"
+                                required>
                         </div>
                     </div>
 
                     <div class="row justify-content-between action">
                         <div class="form-group col-sm-6">
                             <button onclick="Modal.close()" class="btn-block btn-danger">
-                                    Cancelar
+                                Cancelar
                             </button>
                         </div>
 
                         <div class="form-group col-sm-6">
-                            <button type="submit" class="btn-block btn-success">Adicionar</button>
+                            <button type="submit" class="btn-block btn-success" onclick="createLine(nome.value, cep.value, rua.value, numero.value, cidade.value, estado.value)">Adicionar</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
     <!--ALERT ERROR-->
     <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <i class="fas fa-exclamation-triangle"></i> <strong>Erro!</strong> Preencha todas as informações
+        <div class="alert-message">
+            <i class="fas fa-exclamation-triangle"></i> <strong>Erro!</strong> Preencha todas as informações
+        </div>
     </div>
     <!--// MODAL-->
 
-    <!-- Bootstrap core JavaScript -->
+    <!-- Bootstrap JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -185,7 +185,7 @@
     <!-- Fontawesome -->
     <script src="https://kit.fontawesome.com/f0e17cbf2f.js" crossorigin="anonymous"></script>
     <!-- Javascript customizado -->
-    <script src="./scripts.js"></script>
+    <script src="./js/scripts.js"></script>
 </body>
 
 </html>
