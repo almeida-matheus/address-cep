@@ -17,7 +17,6 @@ const alert_message = document.querySelector('.alert-message');
 const cep_btn = document.querySelector('.cep__btn');
 const tabela = document.getElementById('tbl');
 const nome = document.getElementById('nome');
-const email = document.getElementById('email');
 const cep = document.getElementById('cep');
 const rua = document.getElementById('rua');
 const numero = document.getElementById('numero');
@@ -25,13 +24,12 @@ const cidade = document.getElementById('cidade');
 const estado = document.getElementById('estado');
 
 function clearForm() {
-    nome.value = ("");
-    email.value = ("");
-    cep.value = ("");
-    rua.value = ("");
-    numero.value = ("");
-    cidade.value = ("");
-    estado.value = ("");
+    nome.value = "";
+    cep.value = "";
+    rua.value = "";
+    numero.value = "";
+    cidade.value = "";
+    estado.value = "MG";
 }
 
 cep_btn.addEventListener('click', function () {
@@ -103,6 +101,7 @@ function displayResults(response){
 }
 
 function createLine(nome, cep, rua, numero, cidade, estado) {
+    clearForm();
     Modal.close();
     let numeroLinhas = tabela.rows.length;
     /*insira uma linha após a última*/
@@ -122,8 +121,13 @@ function createLine(nome, cep, rua, numero, cidade, estado) {
     cell_city.innerHTML = `${estado}`;
     cell_street.innerHTML =  `${rua}`;
     cell_number.innerHTML =  `${numero}`;
-    cell_del.innerHTML =  `<button type="button" onclick='removeLinha(this)' class="btn btn-danger">Remover</button>`;
+    cell_del.innerHTML =  `<button type="button" onclick="removeLine(this)" class="btn btn-danger"><i class="fas fa-trash"></i></button>`;
 }
+
+function removeLine(linha) {
+    var i=linha.parentNode.parentNode.rowIndex;
+    document.getElementById('tbl').deleteRow(i);
+  } 
 
 function validate(val) {
     let flag1 = true;
@@ -132,7 +136,6 @@ function validate(val) {
     let flag4 = true;
     let flag5 = true;
     let flag6 = true;
-    let flag7 = true;
 
     if (val == 1 || val == 0) {
         if (nome.value == "") {
@@ -149,65 +152,55 @@ function validate(val) {
         }
     }
     if (val == 2 || val == 0) {
-        if (email.value == "") {
-            email.style.borderColor = "red";
+        if (cep.value == "") {
+            cep.style.borderColor = "red";
             flag2 = false;
         }
         else {
-            email.style.borderColor = "grey";
+            cep.style.borderColor = "green";
             flag2 = true;
         }
     }
     if (val == 3 || val == 0) {
-        if (cep.value == "") {
-            cep.style.borderColor = "red";
+        if (rua.value == "") {
+            rua.style.borderColor = "red";
             flag3 = false;
         }
         else {
-            cep.style.borderColor = "green";
+            rua.style.borderColor = "none";
             flag3 = true;
         }
     }
     if (val == 4 || val == 0) {
-        if (rua.value == "") {
-            rua.style.borderColor = "red";
+        if (numero.value == "") {
+            numero.style.borderColor = "red";
             flag4 = false;
         }
         else {
-            rua.style.borderColor = "none";
-            flag4 = true;
-        }
-    }
-    if (val == 5 || val == 0) {
-        if (numero.value == "") {
-            numero.style.borderColor = "red";
-            flag5 = false;
-        }
-        else {
             numero.style.borderColor = "none";
-            flag5 = true;
+            flag4 = true;
         }
     }
     if (val == 6 || val == 0) {
         if (cidade.value == "") {
             cidade.style.borderColor = "red";
-            flag6 = false;
+            flag5 = false;
         }
         else {
             cidade.style.borderColor = "none";
-            flag6 = true;
+            flag5 = true;
         }
     }
     if (val == 7 || val == 0) {
         if (estado.value == "") {
             estado.style.borderColor = "red";
-            flag7 = false;
+            flag6 = false;
         }
         else {
             estado.style.borderColor = "none";
-            flag7 = true;
+            flag6 = true;
         }
     }
-    flag = flag1 && flag2 && flag3 && flag4 && flag5 && flag6 && flag7;
+    flag = flag1 && flag2 && flag3 && flag4 && flag5 && flag6;
     return flag;
 }
