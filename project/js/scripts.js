@@ -12,7 +12,9 @@ const Modal = {
             .remove('active')
     }
 }
-
+document.querySelector('.select2-input')
+document.querySelector('.select2-focusser').value = "Segurança da Informação"
+const alert_message = document.querySelector('.select2-input');
 const alert_message = document.querySelector('.alert-message');
 const cep_btn = document.querySelector('.cep__btn');
 const tabela = document.getElementById('tbl');
@@ -100,34 +102,34 @@ function displayResults(response){
     estado.value = `${response.uf}`;
 }
 
-function createLine(nome, cep, rua, numero, cidade, estado) {
-    clearForm();
-    Modal.close();
-    let numeroLinhas = tabela.rows.length;
-    /*insira uma linha após a última*/
-    let linha = tabela.insertRow(numeroLinhas);
-    /*inserir uma celula em cada coluna*/
-    let cell_name = linha.insertCell(0);
-    let cell_cep = linha.insertCell(1);   
-    let cell_state= linha.insertCell(2);
-    let cell_city= linha.insertCell(3);
-    let cell_street= linha.insertCell(4);
-    let cell_number= linha.insertCell(5);
-    let cell_del = linha.insertCell(6);
+// function createLine(nome, cep, rua, numero, cidade, estado) {
+//     clearForm();
+//     Modal.close();
+//     let numeroLinhas = tabela.rows.length;
+//     /*insira uma linha após a última*/
+//     let linha = tabela.insertRow(numeroLinhas);
+//     /*inserir uma celula em cada coluna*/
+//     let cell_name = linha.insertCell(0);
+//     let cell_cep = linha.insertCell(1);   
+//     let cell_state= linha.insertCell(2);
+//     let cell_city= linha.insertCell(3);
+//     let cell_street= linha.insertCell(4);
+//     let cell_number= linha.insertCell(5);
+//     let cell_del = linha.insertCell(6);
 
-    cell_name.innerHTML = `${nome}`; 
-    cell_cep.innerHTML =  `${cep}`;
-    cell_state.innerHTML =  `${cidade}`
-    cell_city.innerHTML = `${estado}`;
-    cell_street.innerHTML =  `${rua}`;
-    cell_number.innerHTML =  `${numero}`;
-    cell_del.innerHTML =  `<button type="button" onclick="removeLine(this)" class="btn btn-danger"><i class="fas fa-trash"></i></button>`;
-}
+//     cell_name.innerHTML = `${nome}`; 
+//     cell_cep.innerHTML =  `${cep}`;
+//     cell_state.innerHTML =  `${cidade}`
+//     cell_city.innerHTML = `${estado}`;
+//     cell_street.innerHTML =  `${rua}`;
+//     cell_number.innerHTML =  `${numero}`;
+//     cell_del.innerHTML =  `<button type="button" onclick="removeLine(this)" class="btn btn-danger"><i class="fas fa-trash"></i></button>`;
+// }
 
-function removeLine(linha) {
-    var i=linha.parentNode.parentNode.rowIndex;
-    document.getElementById('tbl').deleteRow(i);
-  } 
+// function removeLine(linha) {
+//     var i=linha.parentNode.parentNode.rowIndex;
+//     document.getElementById('tbl').deleteRow(i);
+//   } 
 
 function validate(val) {
     let flag1 = true;

@@ -3,7 +3,6 @@
 class Address
 {
     private $mysql;
-    //recebe o valor e atribui a private $mysql
     public function __construct(mysqli $mysql)
     {
         $this->mysql = $mysql;
@@ -16,5 +15,12 @@ class Address
         $addresses = $resultado->fetch_all(MYSQLI_ASSOC);
 
         return $addresses;
+    }
+
+    public function adicionar(string $nome, int $cep, string $rua, int $numero, string $cidade, string $estado): void
+    {
+        $insertAddress = $this->mysql->prepare('INSERT INTO address (nome, cep, estado, cidade, rua, numero) VALUES(?,?,?,?,?,?);');
+        $insertAddress->bind_param('sisssi', $nome, $cep, $estado, $cidade, $rua, $numero);
+        $insertAddress->execute();
     }
 }

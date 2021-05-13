@@ -1,10 +1,18 @@
 <?php
 
 require 'config.php';
+require 'function.php';
 
-include 'function.php';
 $address = new Address($mysql);
 $addresses = $address->exibirTodos();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $address_send = new Address($mysql);
+    $address_send->adicionar($_POST['nome'], $_POST['cep'], $_POST['rua'], $_POST['numero'],$_POST['cidade'], $_POST['estado']);
+
+    header('Location: index.php');
+    die();
+}
 
 ?>
 <!DOCTYPE html>
@@ -38,14 +46,12 @@ $addresses = $address->exibirTodos();
 
         <!-- <h1 class="mt-5">CADASTRO DE ENDEREÇO</h1> -->
 
-        <!-- <a href="#" onclick="Modal.open()" class="button new">+ Nova Transação</a> -->
-
         <a href="#" onclick="Modal.open()" class="button new add__btn">
             <i class="far fa-address-card"></i>&nbsp;
             NOVO ENDEREÇO
         </a>
 
-        <form method="get" action="{% url 'busca' %}">
+        <!-- <form method="get" action="{% url 'busca' %}">
             <div class="input-group my-5">
                 <input type="search" class="form-control bg-light" placeholder="Pesquise pelo nome"
                     aria-label="pesquisar contato" aria-describedby="button-addon" value="" name="termo">
@@ -55,7 +61,7 @@ $addresses = $address->exibirTodos();
                     </button>
                 </div>
             </div>
-        </form>
+        </form> -->
 
         <!--! TABLE -->
         <section id="table-overflow">
@@ -82,7 +88,7 @@ $addresses = $address->exibirTodos();
                         <td><?php echo $address['cidade']; ?></td>
                         <td><?php echo $address['rua']; ?></td>
                         <td><?php echo $address['numero']; ?></td>
-                        <td><button type="button" onclick="removeLine(this)" class="btn btn-danger">
+                        <td><button type="button" class="btn btn-danger">
                             <i class="fas fa-trash"></i>
                         </button></td>
                     </tr>
@@ -99,7 +105,7 @@ $addresses = $address->exibirTodos();
                 <!-- <form action="" onsubmit="Form.submit(event)"> -->
                 <!-- <form class="form-card" onsubmit="return validate(0)"> -->
                 <!-- onsubmit="createLine(nome.value, cep.value, rua.value, numero.value, cidade.value, estado.value)" -->
-                <div class="form-card" onsubmit="return validate(0)">
+                <form action="index.php" method="post" id="form" class="form-card">
                     <div class="row justify-content-between text-left mt-5">
 
                         <div class="form-group col-sm-12 flex-column d-flex">
@@ -158,8 +164,7 @@ $addresses = $address->exibirTodos();
                             <label for="estado" class="form-control-label mb-0 px-1">UF<span class="text-danger">
                                     *</span>
                             </label>
-                            <!-- <input id="estado" type="text" name="estado" placeholder="..." maxlength="2" required> -->
-                            <select name="estado" type="text" id="estado" class="form-control" placeholder="" maxlength="2" required>
+                            <select name="estado" type="text" id="estado" class="form-control" maxlength="2" required>
                                 <option value="AC">AC</option>
                                 <option value="AL">AL</option>
                                 <option value="AM">AM</option>
@@ -198,11 +203,10 @@ $addresses = $address->exibirTodos();
                         </div>
 
                         <div class="form-group col-sm-6">
-                            <button type="submit" class="btn-block btn-success"
-                                onclick="createLine(nome.value, cep.value, rua.value, numero.value, cidade.value, estado.value)">Adicionar</button>
+                            <button type="submit" class="btn-block btn-success">Adicionar</button>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
