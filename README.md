@@ -1,6 +1,6 @@
 # search-cep
 
-<img src="assets/projects.png" alt="address-cep project">
+<img src="assets/address.png" alt="address-cep project">
 
 > Project search-cep
 
