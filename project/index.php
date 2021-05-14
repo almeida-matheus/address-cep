@@ -3,12 +3,22 @@
 require 'config.php';
 require 'function.php';
 
+//! FUNÇÃO PARA EXIBIR TODAS LINHAS
 $address = new Address($mysql);
 $addresses = $address->exibirTodos();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $address_send = new Address($mysql);
-    $address_send->adicionar($_POST['nome'], $_POST['cep'], $_POST['rua'], $_POST['numero'],$_POST['cidade'], $_POST['estado']);
+    //! FUNÇÃO ADICIONAR UMA LINHA
+    // if ($_POST['input_add'] === "Submit") {
+    if ($_POST['input_add']) {
+        $address_send = new Address($mysql);
+        $address_send->adicionar($_POST['nome'], $_POST['cep'], $_POST['rua'], $_POST['numero'],$_POST['cidade'], $_POST['estado']);
+    }
+    //! FUNÇÃO PARA REMOVER UMA LINHA
+    if ($_POST['input_remove']) {
+        $address_remove = new Address($mysql);
+        $address_remove->remover($_POST['input_remove']);
+    }
 
     header('Location: index.php');
     die();
@@ -88,9 +98,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <td><?php echo $address['cidade']; ?></td>
                         <td><?php echo $address['rua']; ?></td>
                         <td><?php echo $address['numero']; ?></td>
-                        <td><button type="button" class="btn btn-danger">
-                            <i class="fas fa-trash"></i>
-                        </button></td>
+                        <td>
+                        <form action="index.php" method="post">
+                            <input type="hidden" name="input_remove" value="<?php echo $address['id']; ?>">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                        </td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -203,6 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="form-group col-sm-6">
+                            <input type="hidden" name="input_add" value="Submit">
                             <button type="submit" class="btn-block btn-success">Adicionar</button>
                         </div>
                     </div>

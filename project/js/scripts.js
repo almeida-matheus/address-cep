@@ -12,9 +12,7 @@ const Modal = {
             .remove('active')
     }
 }
-document.querySelector('.select2-input')
-document.querySelector('.select2-focusser').value = "Segurança da Informação"
-const alert_message = document.querySelector('.select2-input');
+
 const alert_message = document.querySelector('.alert-message');
 const cep_btn = document.querySelector('.cep__btn');
 const tabela = document.getElementById('tbl');

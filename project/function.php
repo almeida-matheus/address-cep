@@ -23,4 +23,18 @@ class Address
         $insertAddress->bind_param('sisssi', $nome, $cep, $estado, $cidade, $rua, $numero);
         $insertAddress->execute();
     }
+
+    public function remover(int $id): void
+    {
+        $removeAddress = $this->mysql->prepare('DELETE FROM address WHERE id = ?');
+        $removeAddress->bind_param('i', $id);
+        $removeAddress->execute();
+    }
+
+    // redireciona('/projects/search-cep/project/index.php');
+    function redireciona(string $url): void
+    {
+        header("Location: $url");
+        die();
+    }
 }
