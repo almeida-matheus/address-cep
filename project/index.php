@@ -3,9 +3,32 @@
 require 'config.php';
 require 'function.php';
 
-//! FUNÇÃO PARA EXIBIR TODAS LINHAS
-$address = new Address($mysql);
-$addresses = $address->exibirTodos();
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    //! FUNÇÃO PARA EXIBIR TODAS LINHAS
+    $address = new Address($mysql);
+    $addresses = $address->exibirTodos();
+    $qntLine = count($addresses);
+
+    // echo "<pre>";
+    // echo count($addresses);
+    // echo "</pre>";
+    // if ((!is_numeric(isset($_GET['input_search']))) && (isset($_GET['input_search']))) {
+    // if (!is_numeric($_GET['input_search']) && $_GET['input_search'] ) {
+    //! FUNÇÃO PARA EXIBIR LINHAS Q TEM O CEP = PESQUISA
+    if (isset($_GET['input_search'])) {
+        //* checa se digitou numero
+        if (is_numeric($_GET['input_search'])) {
+            $address = new Address($mysql);
+            $addresses = $address->exibirPesquisa("%{$_GET['input_search']}%");
+            $qntLine = count($addresses);
+        } 
+        else {
+            echo "<script>alert('Somento números são aceitos')</script>";
+            echo "<script>alertMessage('Somento números são aceitos')</script>";
+            echo "<script type='text/javascript' src='./js/scripts.js'>alertMessage('Somento números são aceitos');</script>";
+        }
+    }
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //! FUNÇÃO ADICIONAR UMA LINHA
@@ -43,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <header class="all-navbar">
         <div class="container">
             <nav class="navbar">
-                <a class="navbar-brand pr-0 mr-0" href="#">
+                <a class="navbar-brand pr-0 mr-0" onclick = "reloadPage()">
                     <i class="far fa-address-card"></i>
                     address cep
                 </a>
@@ -61,17 +84,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             NOVO ENDEREÇO
         </a>
 
-        <!-- <form method="get" action="{% url 'busca' %}">
-            <div class="input-group my-5">
+        <form method="get" action="index.php">
+            <div class="input-group mt-5 mb-3">
                 <input type="search" class="form-control bg-light" placeholder="Pesquise pelo nome"
-                    aria-label="pesquisar contato" aria-describedby="button-addon" value="" name="termo">
+                    aria-label="pesquisar contato" aria-describedby="button-addon" name="input_search">
                 <div class="input-group-append">
                     <button class="btn search__btn" type="submit" id="button-addon">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
             </div>
-        </form> -->
+        </form>
+
+        <h4 class="text-primary mb-0 mt-4 "><span><?php echo $qntLine; ?></span> endereços encontrados</h4>
 
         <!--! TABLE -->
         <section id="table-overflow">
@@ -235,6 +260,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <!--// MODAL-->
 
+    <script>
+    function alertMessage(message){
+        alert_message.parentElement.classList.add('active')
+        alert_message.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <strong>Erro!</strong> ${message}`
+    }
+    </script>
     <!-- Bootstrap JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

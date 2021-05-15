@@ -13,6 +13,7 @@ const Modal = {
     }
 }
 
+const reload_btn = document.querySelector('.reload__btn');
 const alert_message = document.querySelector('.alert-message');
 const cep_btn = document.querySelector('.cep__btn');
 const tabela = document.getElementById('tbl');
@@ -22,6 +23,16 @@ const rua = document.getElementById('rua');
 const numero = document.getElementById('numero');
 const cidade = document.getElementById('cidade');
 const estado = document.getElementById('estado');
+
+function reloadPage(){
+    location.replace(location.pathname)
+    // location='index.php'
+}
+
+function alertMessage(message){
+    alert_message.parentElement.classList.add('active')
+    alert_message.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <strong>Erro!</strong> ${message}`
+}
 
 function clearForm() {
     nome.value = "";
@@ -58,15 +69,16 @@ function validateCEP(value){
         } 
         else {
             clearForm();
-            alert_message.parentElement.classList.add('active')
-            alert_message.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <strong>Erro!</strong> Formato de CEP inválido.`
-            // alert("Formato de CEP inválido.");
+            alertMessage("Formato de CEP inválido")
+            // alert_message.parentElement.classList.add('active')
+            // alert_message.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <strong>Erro!</strong> Formato de CEP inválido.`
         }
     }
     else {
         clearForm();
-        alert_message.parentElement.classList.add('active')
-        alert_message.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <strong>Erro!</strong> Campo CEP vazio`
+        alertMessage("Campo CEP vazio")
+        // alert_message.parentElement.classList.add('active')
+        // alert_message.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <strong>Erro!</strong> Campo CEP vazio`
     }
 }
 
@@ -87,9 +99,9 @@ function requestCEP(cep) {
                     displayResults(response)
                 })
                 .catch(error => {
-                    alert_message.parentElement.classList.add('active')
-                    alert_message.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <strong>Erro!</strong> ${error.message}`
-                    // alert(error.message)
+                    alertMessage(error.message)
+                    // alert_message.parentElement.classList.add('active')
+                    // alert_message.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <strong>Erro!</strong> ${error.message}`
                 })
         })
 }

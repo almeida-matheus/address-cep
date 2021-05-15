@@ -1,3 +1,5 @@
+[![PHP Version](https://img.shields.io/badge/php-7.4-1f425f.svg?style=for-the-badge)](https://python.org)
+
 <!-- PROJECT LOGO -->
 <p align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
