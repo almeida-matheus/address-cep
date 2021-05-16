@@ -3,7 +3,7 @@
 <!-- PROJECT LOGO -->
 <p align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="https://raw.githubusercontent.com/othneildrew/Best-README-Template/master/images/logo.png" alt="logo" width="80" height="80">
+    <img src="./assets/logo-cep.png" alt="logo" width="80" height="80">
   </a>
 
   <h3 align="center">search-cep</h3>
@@ -20,6 +20,7 @@
   <summary>Table of Contents</summary>
   <ol>
     <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#usage">Usage</a></li>
     <li><a href="#installation">Installation</a></li>
     <li><a href="#contributing">Contributing</a></li>
   </ol>
@@ -28,7 +29,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src="assets/address.png" alt="address-cep project">
+<img src="./assets/address.png" alt="address-cep project">
 
 > Web application that searches zip code and register the address.
 #### Built With
@@ -38,6 +39,13 @@
 * Javascript
 * PHP
 * MySQL
+
+<!-- USAGE EXAMPLES -->
+## Usage
+
+<img src="./assets/search-cep.gif" alt="address-cep gif">
+
+> Read address, Create addres, Edit address, Delete adress, Search address
 
 <!-- INSTALATION -->
 ## Installation
