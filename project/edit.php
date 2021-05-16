@@ -8,39 +8,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $address = new Address($mysql);
     $addresses = $address->exibirTodos();
     $qntLine = count($addresses);
-
-    // echo "<pre>";
-    // echo count($addresses);
-    // echo "</pre>";
-    // if ((!is_numeric(isset($_GET['input_search']))) && (isset($_GET['input_search']))) {
-    // if (!is_numeric($_GET['input_search']) && $_GET['input_search'] ) {
-    //! FUNÇÃO PARA EXIBIR LINHAS Q TEM O CEP = PESQUISA
-    if (isset($_GET['input_search'])) {
-        //* checa se digitou numero
-        if (is_numeric($_GET['input_search'])) {
-            $address = new Address($mysql);
-            $addresses = $address->exibirPesquisa("%{$_GET['input_search']}%");
-            $qntLine = count($addresses);
-        } 
-        else {
-            echo "<script>alert('Somento números são aceitos')</script>";
-            echo "<script>alertMessage('Somento números são aceitos')</script>";
-            echo "<script type='text/javascript' src='./js/scripts.js'>alertMessage('Somento números são aceitos');</script>";
-        }
-    }
+    //! FUNÇÃO PARA RETORNAR TODOS OS DADOS DO ID PASSADO COMO PARAMETRO NA URL
+    $oneAddress = new Address($mysql);
+    $oneAddress = $oneAddress->encontrarPorId($_GET['id']);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //! FUNÇÃO ADICIONAR UMA LINHA
-    // if ($_POST['input_add'] === "Submit") {
-    if ($_POST['input_add']) {
+    if ($_POST['input_edit']) {
         $address_send = new Address($mysql);
-        $address_send->adicionar($_POST['nome'], $_POST['cep'], $_POST['rua'], $_POST['numero'],$_POST['cidade'], $_POST['estado']);
-    }
-    //! FUNÇÃO PARA REMOVER UMA LINHA
-    if ($_POST['input_remove']) {
-        $address_remove = new Address($mysql);
-        $address_remove->remover($_POST['input_remove']);
+        $address_send->editar($_POST['input_edit'], $_POST['nome'], $_POST['cep'], $_POST['rua'], $_POST['numero'],$_POST['cidade'], $_POST['estado']);
     }
 
     header('Location: index.php');
@@ -81,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <a href="#" onclick="Modal.open()" class="button new add__btn">
             <i class="far fa-address-card"></i>&nbsp;
-            NOVO ENDEREÇO
+            EDITAR ENDEREÇO
         </a>
 
         <form method="get" action="index.php">
@@ -146,21 +123,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </section>
     </div>
     <!--! [MODAL]-->
-    <div class="modal1-overlay">
+    <div class="modal1-overlay active">
         <div class="modal1">
             <div id="form">
-                <h3>Novo Endereço</h3>
+                <h3>Editar Endereço</h3>
                 <!-- <form action="" onsubmit="Form.submit(event)"> -->
                 <!-- <form class="form-card" onsubmit="return validate(0)"> -->
                 <!-- onsubmit="createLine(nome.value, cep.value, rua.value, numero.value, cidade.value, estado.value)" -->
-                <form action="index.php" method="post" id="form" class="form-card">
+                <form action="edit.php" method="post" id="form" class="form-card">
                     <div class="row justify-content-between text-left mt-5">
 
                         <div class="form-group col-sm-12 flex-column d-flex">
                             <label for="nome" class="form-control-label mb-0 px-1">Nome<span class="text-danger">
                                     *</span>
                             </label>
-                            <input id="nome" type="text" name="nome" placeholder="..." maxlength="100" required>
+                            <input value="<?php echo $oneAddress['nome']; ?>" id="nome" type="text" name="nome" placeholder="..." maxlength="100" required>
                         </div>
                         <!-- onblur="validate(1)"  -->
                     </div>
@@ -172,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="input-group">
                                 <input id="cep" type="text" name="cep" class="form-control" maxlength="8" pattern="\d*"
                                     title="Somente números são permitidos" placeholder="..." aria-label="CEP"
-                                    aria-describedby="button-addon2" required>
+                                    aria-describedby="button-addon2" value="<?php echo $oneAddress['cep']; ?>" required>
                                 <div class="input-group-append">
                                     <button class="cep__btn btn btn-primary text-white" type="button"
                                         id="button-addon2">
@@ -188,14 +165,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="form-group col-sm-9 flex-column d-flex">
                             <label for="rua" class="form-control-label mb-0 px-1">Rua<span class="text-danger"> *</span>
                             </label>
-                            <input id="rua" type="text" name="rua" placeholder="..." required>
+                            <input value="<?php echo $oneAddress['rua']; ?>" id="rua" type="text" name="rua" placeholder="..." required>
                         </div>
 
                         <div class="form-group col-sm-3 flex-column d-flex">
                             <label for="numero" class="form-control-label mb-0 px-1">N°<span class="text-danger">
                                     *</span>
                             </label>
-                            <input id="numero" name="numero" pattern="\d*" title="Somente números são permitidos"
+                            <input value="<?php echo $oneAddress['numero']; ?>" id="numero" name="numero" pattern="\d*" title="Somente números são permitidos"
                                 placeholder="..." maxlength="6" required>
                         </div>
 
@@ -206,13 +183,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <label for="cidade" class="form-control-label mb-0 px-1">Cidade<span class="text-danger">
                                     *</span>
                             </label>
-                            <input id="cidade" type="text" name="cidade" placeholder="..." maxlength="100" required>
+                            <input value="<?php echo $oneAddress['cidade']; ?>" id="cidade" type="text" name="cidade" placeholder="..." maxlength="100" required>
                         </div>
                         <div class="form-group col-sm-3 flex-column d-flex">
                             <label for="estado" class="form-control-label mb-0 px-1">UF<span class="text-danger">
                                     *</span>
                             </label>
-                            <select name="estado" type="text" id="estado" class="form-control" maxlength="2" required>
+                            <select value="<?php echo $oneAddress['estado']; ?>" name="estado" type="text" id="estado" class="form-control" maxlength="2" required>
                                 <option value="AC">AC</option>
                                 <option value="AL">AL</option>
                                 <option value="AM">AM</option>
@@ -223,7 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <option value="ES">ES</option>
                                 <option value="GO">GO</option>
                                 <option value="MA">MA</option>
-                                <option value="MG" selected>MG</option>
+                                <option value="MG">MG</option>
                                 <option value="MT">MT</option>
                                 <option value="MS">MS</option>
                                 <option value="PA">PA</option>
@@ -246,13 +223,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="row justify-content-between action">
                         <div class="form-group col-sm-6">
                             <button onclick="Modal.close()" class="btn-block btn-danger">
-                                Cancelar
+                                <a href="index.php" class="action__cancel">Cancelar</a>
                             </button>
                         </div>
 
                         <div class="form-group col-sm-6">
-                            <input type="hidden" name="input_add" value="Submit">
-                            <button type="submit" class="btn-block btn-success">Adicionar</button>
+                            <!-- <input type="hidden" name="input_edit" value="Submit"> -->
+                            <input type="hidden" name="input_edit" value="<?php echo $_GET['id']; ?>">
+                            <button type="submit" class="btn-block btn-success">Editar</button>
                         </div>
                     </div>
                 </form>
@@ -267,12 +245,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
     <!--// MODAL-->
-
+    
     <script>
-    function alertMessage(message){
-        alert_message.parentElement.classList.add('active')
-        alert_message.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <strong>Erro!</strong> ${message}`
-    }
+    // window.addEventListener('load', () => {
+    //     Modal.open()
+    // })
+
+    // window.onload = Modal.open()
+    // window.addEventListener('onload', function () {
+    //     Modal.open()
+    // })
+    // window.onload = function(){
+    //     Modal.open()
+    // }
     </script>
     <!-- Bootstrap JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

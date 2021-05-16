@@ -15,7 +15,7 @@ body {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 /*! [NAVBAR]*/
@@ -269,6 +269,10 @@ button:focus {
 .action button {
     margin-top: 10px;
     padding: 10px;
+}
+
+.action__cancel {
+    text-decoration: none !important;
 }
 
 /*// FORM */

@@ -39,6 +39,16 @@ class Address
         return $users;
     }
 
+    public function encontrarPorId(int $id): array
+    {
+        $selectAddress = $this->mysql->prepare("SELECT nome, cep, estado, cidade, rua, numero FROM address WHERE id = ?");
+        $selectAddress->bind_param('i', $id);
+        $selectAddress->execute();
+        //pega o resultado da querye q acabou de executar e retorna como array associativo
+        $oneAddress = $selectAddress->get_result()->fetch_assoc();
+        return $oneAddress;
+    }
+
     public function adicionar(string $nome, int $cep, string $rua, int $numero, string $cidade, string $estado): void
     {
         $insertAddress = $this->mysql->prepare('INSERT INTO address (nome, cep, estado, cidade, rua, numero) VALUES(?,?,?,?,?,?);');
@@ -51,6 +61,13 @@ class Address
         $removeAddress = $this->mysql->prepare('DELETE FROM address WHERE id = ?');
         $removeAddress->bind_param('i', $id);
         $removeAddress->execute();
+    }
+
+    public function editar(int $id, string $nome, int $cep, string $rua, int $numero, string $cidade, string $estado): void
+    {
+        $editAddress = $this->mysql->prepare('UPDATE address SET nome = ?, cep = ?, estado = ?, cidade = ?, rua = ?, numero = ? WHERE id = ?');
+        $editAddress->bind_param('sisssii', $nome, $cep, $estado, $cidade, $rua, $numero, $id);
+        $editAddress->execute();
     }
 
     // redireciona('/projects/search-cep/project/index.php');
