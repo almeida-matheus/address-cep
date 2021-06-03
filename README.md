@@ -2,14 +2,14 @@
 
 <!-- PROJECT LOGO -->
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://almeida-matheus.github.io/address-cep/demo/index.html">
     <img src="./assets/logo-cep.png" alt="logo" width="80" height="80">
   </a>
 
-  <h3 align="center">search-cep</h3>
+  <h3 align="center">address-cep</h3>
 
   <p align="center">
-    <a href="https://almeida-matheus.github.io/search-cep/demo/index.html">
+    <a href="https://almeida-matheus.github.io/address-cep/demo/index.html">
         <img src="https://img.shields.io/badge/-VIEW%20DEMO-1100FF?&style=for-the-badge&logoColor=fff"/>
     </a>
   </p>
@@ -43,9 +43,9 @@
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-<img src="./assets/search-cep.gif" alt="address-cep gif">
+<img src="./assets/address-cep.gif" alt="address-cep gif">
 
-> Read address, Create addres, Edit address, Delete adress, Search address
+> Read address \ Create addres \ Edit address \ Delete adress \ Search address
 
 <!-- INSTALATION -->
 ## Installation
@@ -56,7 +56,7 @@ sudo apt-get install php default-mysql-server php-mysql apache2 libapache2-mod-p
 
 #### 2. Clone git repository
 ```
-git clone "https://github.com/almeida-matheus/search-cep"
+git clone "https://github.com/almeida-matheus/address-cep"
 ```
 
 #### 3. Load sample data into MySQL
@@ -65,13 +65,13 @@ git clone "https://github.com/almeida-matheus/search-cep"
 mysql -u <mysql-user> -p
 
 # Give the absolute path of the file
-mysql> source ~/search-cep/project/database_structure.sql
-mysql> exit;
+source ~/address-cep/project/database_structure.sql
+exit;
 ```
 #### 4. Edit project settings
 ```
 # open settings file
-vim search-cep/project/config.php
+vim address-cep/project/config.php
 
 # Edit Database configurations with your MySQL configurations.
 $mysql = new mysqli('localhost', 'root', '', 'db_address');
@@ -82,9 +82,8 @@ $mysql = new mysqli('localhost', 'root', '', 'db_address');
 <!-- CONTRIBUTING -->
 ## Contributing
 1. Fork the Project
-2. Clone this project (`https://github.com/almeida-matheus/search-cep`)
-3. Create your Feature Branch (`git checkout -b nameBranch`)
-4. Add your Changes (`git add .`)
-5. Commit your Changes (`git commit -m 'Add some feature'`)
-6. Push to the Branch (`git push origin nameBranch`)
-7. Open a Pull Request
+2. Create your Feature Branch (`git checkout -b nameBranch`)
+3. Add your Changes (`git add .`)
+4. Commit your Changes (`git commit -m 'Add some feature'`)
+5. Push to the Branch (`git push origin nameBranch`)
+6. Open a Pull Request
